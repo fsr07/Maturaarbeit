@@ -4,7 +4,15 @@ Dieses Projekt implementiert eine Künstliche Intelligenz für das Käsekästche
 
 ## Installation
 
-Um das Projekt auszuführen, stellen Sie sicher, dass Sie Python (3.8+) installiert haben. Alle benötigten Bibliotheken sind in der Datei requirements.txt aufgeführt und können mit einem einzigen Befehl installiert werden:
+Sie benötigen Git, um dieses Programm nutzen zu können. Haben sie dies, klonen Sie zuerst dieses Repository mit:
+
+```PowerShell
+git clone https://github.com/fsr07/Maturaarbeit.git
+```
+
+Es ist empfehlenswert, dass Repository an einem Ort zu speichern, wo der gesamte Pfad nicht allzu viele Zeichen ist, da dies aufgrund der maximalen Pfadzeichenanzahl von Windows sonst zu Problemen mit dem ausführen des Programms führen kann.
+
+Um das Projekt auszuführen, stellen Sie sicher, dass Sie Python (3.8-3.11; Achtung: Python 3.12 und neuere Versionen werden NICHT unterstützt) installiert haben. Alle benötigten Bibliotheken sind in der Datei requirements.txt aufgeführt und können mit einem einzigen Befehl installiert werden:
 
 ```PowerShell
 pip install -r requirements.txt
@@ -22,7 +30,11 @@ Das `Steuerung.py`-Skript ist das Hauptprogramm zur Interaktion mit den Käsekä
 Starten Sie das Skript und folgen Sie den Anweisungen in der Konsole:
 
 ```PowerShell
-cd "Maturaarbeit/Produkt (Programmcode)/"
+# Zuerst in das geklonte Repository wechseln (falls noch nicht geschehen)
+cd Maturaarbeit
+# Dann in den Programmcode-Ordner
+cd "Produkt (Programmcode)"
+# Dann den Code ausführen
 python Steuerung.py
 ```
 
