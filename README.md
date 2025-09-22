@@ -4,7 +4,7 @@ Dieses Projekt implementiert eine Künstliche Intelligenz für das Käsekästche
 
 ## Installation
 
-Sie benötigen Git, um dieses Programm nutzen zu können. Haben sie dies, klonen Sie zuerst dieses Repository mit:
+Um dieses Programm nutzen zu können, benötigen Sie Git. Nach der Installation können Sie das Repository mit folgendem Befehl klonen:
 
 ```PowerShell
 git clone https://github.com/fsr07/Maturaarbeit.git
