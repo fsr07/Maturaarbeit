@@ -10,7 +10,7 @@ Um dieses Programm nutzen zu können, benötigen Sie Git. Nach der Installation 
 git clone https://github.com/fsr07/Maturaarbeit.git
 ```
 
-Es ist empfehlenswert, dass Repository an einem Ort zu speichern, wo der gesamte Pfad nicht allzu viele Zeichen ist, da dies aufgrund der maximalen Pfadzeichenanzahl von Windows sonst zu Problemen mit dem ausführen des Programms führen kann.
+Es ist empfehlenswert, das Repository an einem Ort zu speichern, an dem der gesamte Pfad nicht allzu viele Zeichen enthält, da es sonst aufgrund der maximalen Pfadlänge von Windows zu Problemen beim Ausführen des Programms kommen kann.
 
 Um das Projekt auszuführen, stellen Sie sicher, dass Sie Python (3.8-3.11; Achtung: Python 3.12 und neuere Versionen werden NICHT unterstützt) installiert haben. Alle benötigten Bibliotheken sind in der Datei requirements.txt aufgeführt und können mit einem einzigen Befehl installiert werden:
 
