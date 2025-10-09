@@ -63,7 +63,7 @@ Das Projekt ist folgendermassen aufgebaut:
 
 Die folgenden Modelle wurden im Rahmen der Maturaarbeit trainiert und analysiert:
 
-| Modell (.zip) | Alias | Experiment | Belohnungsfunktion (Umgebung) | Lernrate | Diskontierungsfaktor | Explorationsphasenanteil |
+| Datei (.zip) | Bezeichnungen | Experiment | Belohnungsfunktion (Umgebung) | Lernrate | Diskontierungsfaktor | Explorationsphasenanteil |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | B1 | (B1), (T2), Referenzmodell | 1 und 2 | B1 | 0,0001 | 0,99 | 0,1 |
 | B2 | (B2) | 1 | B2 | 0,0001 | 0,99 | 0,1 |
