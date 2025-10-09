@@ -97,7 +97,7 @@ def modus_1():
     evaluierungs_umgebung = Monitor(evaluierungs_umgebung, info_keywords=("is_success",))
     obs, info = evaluierungs_umgebung.reset(seed=seed)    
     
-    parameter = input("Wenn Sie die Hyperparameter anpassen wollen, geben Sie bitte 1 ein, sonst 0: ")
+    parameter = input("Wenn Sie die Hyperparameter anpassen wollen, geben Sie bitte 1 ein, 0 für die Standardwerte: ")
     if "1" in parameter:
         try:
             lernrate = float(input("Definieren Sie die Lernrate (Standard: 0.0001, Range: 0.00005 - 0.001): "))
