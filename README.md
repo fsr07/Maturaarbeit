@@ -63,17 +63,17 @@ Das Projekt ist folgendermassen aufgebaut:
 
 Die folgenden Modelle wurden im Rahmen der Maturaarbeit trainiert und analysiert:
 
-| Modellname | Experiment | Umgebung (Belohnungsfunktion) | Lernrate | Diskontierungsfaktor | Explorationsphasenanteil |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| B1_T2 (Referenz) | 1 und 2 | B1 | 0,0001 | 0,99 | 0,1 |
-| B2 | 1 | B2 | 0,0001 | 0,99 | 0,1 |
-| B3 | 1 | B3 | 0,0001 | 0,99 | 0,1 |
-| T1a | 2 | B1 | 0,00005 | 0,99 | 0,1 |
-| T3a | 2 | B1 | 0,001 | 0,99 | 0,1 |
-| T1b | 2 | B1 | 0,0001 | 0,9 | 0,1 |
-| T3b | 2 | B1 | 0,0001 | 0,999 | 0,1 |
-| T1c | 2 | B1 | 0,0001 | 0,99 | 0,05 |
-| T3c | 2 | B1 | 0,0001 | 0,99 | 0,25 |
+| Modell (.zip) | Alias | Experiment | Belohnungsfunktion (Umgebung) | Lernrate | Diskontierungsfaktor | Explorationsphasenanteil |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| B1 | (B1), (T2), Referenzmodell | 1 und 2 | B1 | 0,0001 | 0,99 | 0,1 |
+| B2 | (B2) | 1 | B2 | 0,0001 | 0,99 | 0,1 |
+| B3 | (B3) | 1 | B3 | 0,0001 | 0,99 | 0,1 |
+| T1a | (T1a) | 2 | B1 | 0,00005 | 0,99 | 0,1 |
+| T3a | (T3a) | 2 | B1 | 0,001 | 0,99 | 0,1 |
+| T1b | (T1b) | 2 | B1 | 0,0001 | 0,9 | 0,1 |
+| T3b | (T3b) | 2 | B1 | 0,0001 | 0,999 | 0,1 |
+| T1c | (T1c) | 2 | B1 | 0,0001 | 0,99 | 0,05 |
+| T3c | (T3c) | 2 | B1 | 0,0001 | 0,99 | 0,25 |
 
 ## TensorBoard Statistiken
 
