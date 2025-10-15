@@ -10,7 +10,7 @@ Um dieses Programm nutzen zu können, benötigen Sie Git. Nach der Installation 
 git clone https://github.com/fsr07/Maturaarbeit.git
 ```
 
-Es ist empfehlenswert, das Repository an einem Ort zu speichern, an dem der gesamte Pfad nicht allzu viele Zeichen enthält, da es sonst aufgrund der maximalen Pfadlänge von Windows zu Problemen beim Ausführen des Programms kommen kann.
+Es ist empfehlenswert, das Repository an einen Ort zu klonen, an dem der gesamte Pfad nicht allzu viele Zeichen enthält, da es sonst aufgrund der maximalen Pfadlänge von Windows zu Problemen beim Ausführen des Programms kommen kann.
 
 Um das Projekt auszuführen, stellen Sie sicher, dass Sie Python (3.8-3.11; Achtung: Python 3.12 und neuere Versionen werden NICHT unterstützt) installiert haben. Alle benötigten Bibliotheken sind in der Datei requirements.txt aufgeführt und können mit einem einzigen Befehl installiert werden:
 
@@ -33,7 +33,7 @@ Starten Sie das Skript und folgen Sie den Anweisungen in der Konsole:
 # Zuerst in das geklonte Repository wechseln (falls noch nicht geschehen)
 cd Maturaarbeit
 # Dann in den Programmcode-Ordner
-cd "Produkt (Programmcode)"
+cd Produkt
 # Dann den Code ausführen
 python Steuerung.py
 ```
@@ -44,19 +44,27 @@ Das Projekt ist folgendermassen aufgebaut:
 
 ```
 .
-├── README.md                       # Diese Übersichtsdatei
-├── requirements.txt                # Installationsabhängigkeiten
-└── Maturaarbeit/
-    └── Produkt (Programmcode)/     # Hauptordner mit Code, Modellen und Logs
-        ├── Steuerung.py            # Hauptskript zum Starten des Programms
-        ├── Belohnungsfunktion_1.py
-        ├── Belohnungsfunktion_2.py
-        ├── Belohnungsfunktion_3.py
-        ├── Evaluierungsumgebung.py
-        ├── *.zip                   # Die trainierten KI-Modelle
-        └── logs/
-            ├── tmp/                # Trainings-Logs für TensorBoard
-            └── Datenauswertung/    # Aufbereitete Daten und Diagramme
+├── README.md                              # Diese Datei
+├── requirements.txt                       # Python-Abhängigkeiten
+├── LICENSE.txt                            # MIT Lizenz
+├── .gitignore                             # Git-Konfiguration
+│
+└── Produkt/                               # Implementierung
+    ├── Steuerung.py                       # Hauptprogramm
+    ├── Belohnungsfunktion_1.py            # Umgebung mit reaktiver Bestrafung
+    ├── Belohnungsfunktion_2.py            # Umgebung mit vorausschauender Bestrafung
+    ├── Belohnungsfunktion_3.py            # Umgebung mit kombinierter Bestrafung
+    ├── Evaluierungsumgebung.py            # Evaluierungsumgebung mit Evaluierungsgegner
+    ├── [Modellname].zip                   # Trainierte Modelle
+    │
+    └── logs/
+        ├── tmp/                           # Trainings-Logs
+        │   └── [Modellname]/
+        │       ├── events.out.tfevents.*  # TensorBoard Dateien
+        │       └── progress.csv           # Trainingsdaten
+        │
+        └── Datenauswertung/               # Ausgewertete Daten und Diagramme
+            └── *.xlsx                     # Excel-Auswertungen
 ```
 
 ## Übersicht der Modelle
@@ -77,10 +85,10 @@ Die folgenden Modelle wurden im Rahmen der Maturaarbeit trainiert und analysiert
 
 ## TensorBoard Statistiken
 
-Während des Trainings werden Metriken und Logs in `"Maturaarbeit/Produkt (Programmcode)/logs/tmp/"` gespeichert. Sie können diese Statistiken mit TensorBoard visualisieren. Öffnen Sie ein Terminal im Projektstammverzeichnis und führen Sie den folgenden Befehl aus:
+Während des Trainings werden Metriken und Logs in `"Maturaarbeit/Produkt/logs/tmp/"` gespeichert. Sie können diese Statistiken mit TensorBoard visualisieren. Öffnen Sie ein Terminal im Projektstammverzeichnis und führen Sie den folgenden Befehl aus:
 
 ```PowerShell
-tensorboard --logdir "Maturaarbeit/Produkt (Programmcode)/logs/tmp/" --reload_interval 30
+tensorboard --logdir "Maturaarbeit/Produkt/logs/tmp/" --reload_interval 30
 ```
 
 Anschliessend können Sie TensorBoard in Ihrem Webbrowser unter der angezeigten Adresse (normalerweise `http://localhost:6006/`) aufrufen.
