@@ -15,6 +15,7 @@ Es ist empfehlenswert, das Repository an einen Ort zu klonen, an dem der gesamte
 Um das Projekt auszuführen, stellen Sie sicher, dass Sie Python (3.8-3.11; Achtung: Python 3.12 und neuere Versionen werden NICHT unterstützt) installiert haben. Alle benötigten Bibliotheken sind in der Datei requirements.txt aufgeführt und können mit einem einzigen Befehl installiert werden:
 
 ```PowerShell
+cd Maturaarbeit
 pip install -r requirements.txt
 ```
 
