@@ -341,10 +341,6 @@ def modus_3():
     print("")
     print("─" * 29 + "EVALUIERUNGSERGEBNISSE" + "─" * 29)
     print(f"""
-Liste der kumulierten Belohnungen jedes Spiels:
-
-{kumulierte_belohnungen}
-
 Evaluierungswerte des Modell {modell_laden}:
 Durchschnittliche Belohnung:  {belohnung_durchschnitt}
 Standardabweichung Belohnung: {belohnung_standardabweichung}
