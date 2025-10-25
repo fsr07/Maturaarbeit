@@ -377,15 +377,15 @@ def modus_4():
         #Umgebung wird importiert
         KäsekästchenEnv, KäsekästchenEvaluierungEnv = umgebung_importieren(modell_laden)
         zeitschritte = int(input("Anzahl Zeitschritte: "))
+        umgebung = KäsekästchenEnv(4, 4, render_mode="human")
+        obs, info = umgebung.reset()
+        
+        modell = DQN.load(modell_laden)
     except:
         print("Unzulässige Eingabe")
         time.sleep(2)
         return modus_4()
     
-    umgebung = KäsekästchenEnv(4, 4, render_mode="human")
-    obs, info = umgebung.reset()
-    
-    modell = DQN.load(modell_laden)
     for _ in range(zeitschritte):
         action, _ = modell.predict(obs, deterministic=True)
         obs, reward, terminated, truncated, info = umgebung.step(action)
