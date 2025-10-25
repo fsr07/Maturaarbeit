@@ -10,6 +10,9 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.callbacks import EvalCallback
 from stable_baselines3.common.logger import configure
 import time
+import warnings
+warnings.filterwarnings('ignore', category=UserWarning)
+import os
 
 
 seed = 0 # Durch einen festen Seedwert wird die Reproduzierbarkeit sichergestellt.
@@ -34,9 +37,9 @@ def gewinnrate_evaluierung(modell, umgebung, anzahl_spiele):
             if fertig:
                 spielbelohnung_liste.append(spielbelohnung)
                 if info['is_success']:
-                  siege += 1
+                    siege += 1
 
-        gewinnrate = siege / anzahl_spiele
+    gewinnrate = siege / anzahl_spiele
     
     return spielbelohnung_liste, gewinnrate
 
@@ -61,13 +64,54 @@ def umgebung_importieren(belohnungsfunktion):
 
 # Funktion, um Nutzer nach Modus zu fragen.
 def user_abfrage():
-    modus = input("""
+    os.system('cls' if os.name == 'nt' else 'clear')
+    # Printet Programmnamen in ASCII-Art
+    
+    print("""
+ /$$   /$$   /$ /$                       /$$         /$ /$               /$$               /$$                          
+| $$  /$$/  |_/|_/                      | $$        |_/|_/              | $$              | $$                          
+| $$ /$$/   /$$$$$$   /$$$$$$$  /$$$$$$ | $$   /$$  /$$$$$$   /$$$$$$$ /$$$$$$    /$$$$$$$| $$$$$$$   /$$$$$$  /$$$$$$$ 
+| $$$$$/   |____  $$ /$$_____/ /$$__  $$| $$  /$$/ |____  $$ /$$_____/|_  $$_/   /$$_____/| $$__  $$ /$$__  $$| $$__  $$
+| $$  $$    /$$$$$$$|  $$$$$$ | $$$$$$$$| $$$$$$/   /$$$$$$$|  $$$$$$   | $$    | $$      | $$  \ $$| $$$$$$$$| $$  \ $$
+| $$\  $$  /$$__  $$ \____  $$| $$_____/| $$_  $$  /$$__  $$ \____  $$  | $$ /$$| $$      | $$  | $$| $$_____/| $$  | $$
+| $$ \  $$|  $$$$$$$ /$$$$$$$/|  $$$$$$$| $$ \  $$|  $$$$$$$ /$$$$$$$/  |  $$$$/|  $$$$$$$| $$  | $$|  $$$$$$$| $$  | $$
+|__/  \__/ \_______/|_______/  \_______/|__/  \__/ \_______/|_______/    \___/   \_______/|__/  |__/ \_______/|__/  |__/
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+ /$$                       /$$$$$$$$ /$$$$$$  /$$$$$$$   /$$$$$$  /$$$$$$$$                                             
+| $$                      | $$_____//$$__  $$| $$__  $$ /$$$_  $$|_____ $$/                                             
+| $$$$$$$  /$$   /$$      | $$     | $$  \__/| $$  \ $$| $$$$\ $$     /$$/                                              
+| $$__  $$| $$  | $$      | $$$$$  |  $$$$$$ | $$$$$$$/| $$ $$ $$    /$$/                                               
+| $$  \ $$| $$  | $$      | $$__/   \____  $$| $$__  $$| $$\ $$$$   /$$/                                                
+| $$  | $$| $$  | $$      | $$      /$$  \ $$| $$  \ $$| $$ \ $$$  /$$/                                                 
+| $$$$$$$/|  $$$$$$$      | $$     |  $$$$$$/| $$  | $$|  $$$$$$/ /$$/                                                  
+|_______/  \____  $$      |__/      \______/ |__/  |__/ \______/ |__/                                                   
+           /$$  | $$                                                                                                    
+          |  $$$$$$/                                                                                                    
+           \______/                                                                                                     
+""")
+    print("=" * 120)
+    print("Steuerungsprogramm des DQN-Trainings von Käsekästchen".center(120))
+    print("=" * 120)
+    print("")
+    print("─" * 80)
+    print("HAUPTMENÜ".center(80))
+    print("─" * 80)
+    print("")
+
+    
+    print("""
 Geben Sie eine Zahl ein, um eine Aktion zu starten:
-1: Neues Modell trainieren.
-2: Vorhandendes Modell weitertrainieren.
-3: Modell evaluieren lassen.
-4: Selber Gegen ein trainiertes Modell spielen.
-Modus: """)
+[1] Neues Modell trainieren.
+[2] Vorhandendes Modell weitertrainieren.
+[3] Modell evaluieren lassen.
+[4] Selber Gegen ein trainiertes Modell spielen.""")
+    print("")
+    print("─" * 80)
+    modus = input("Ihre Wahl: ")
+    print("")
+    print("─" * 80)
     if "1" in modus:
         modus_1()
     elif "2" in modus:
@@ -85,9 +129,16 @@ Modus: """)
 def modus_1():
     global seed
     
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("")
+    print("═" * 80)
+    print("NEUES MODELL TRAINIEREN".center(80))
+    print("═" * 80)
+    print("")
+    
     belohnungsfunktion = input("Wählen Sie mit welcher Belohnungsfunktion (B1, B2, B3) Sie trainieren wollen: ")
     
-    #Umgebungen werden importiert
+    # Umgebungen werden importiert
     KäsekästchenEnv, KäsekästchenEvaluierungEnv = umgebung_importieren(belohnungsfunktion)
         
     umgebung = KäsekästchenEnv(4, 4) # Trainingsumgebung wird initialisiert.
@@ -95,19 +146,31 @@ def modus_1():
     
     evaluierungs_umgebung = KäsekästchenEvaluierungEnv(4, 4) # Evaluierungsumgebung wir initialisiert.
     evaluierungs_umgebung = Monitor(evaluierungs_umgebung, info_keywords=("is_success",))
-    obs, info = evaluierungs_umgebung.reset(seed=seed)    
+    obs, info = evaluierungs_umgebung.reset(seed=seed)
     
-    parameter = input("Wenn Sie die Hyperparameter anpassen wollen, geben Sie bitte 1 ein, 0 für die Standardwerte: ")
+    print("")
+    print("─" * 80)
+    
+    parameter = input("Hyperparameter anpassen? [1=Ja / 0=Nein]: ")
     if "1" in parameter:
         try:
-            lernrate = float(input("Definieren Sie die Lernrate (Standard: 0.0001, Range: 0.00005 - 0.001): "))
-            gamma = float(input("Definieren Sie den Diskontierungsfaktor (Standard: 0.99, Range: 0.8 - 0.999): "))
-            explorationsphasenanteil = float(input("Definieren Sie den Explorationsphasenanteil (Standard: 0.1, Range: 0.05 - 0.25): "))
-            zeitschritte = int(input("Wie viele Zeitschritte wollen Sie trainieren? (Standard: 2500000, Range: 200000 - 3000000): "))
+            print("")
+            print("─" * 33 +  "Hyperparameter" + "─" * 33)
+            lernrate = float(input("Lernrate (Standard: 0.0001, Range: 0.00005 - 0.001): "))
+            gamma = float(input("Diskontierungsfaktor (Standard: 0.99, Range: 0.8 - 0.999): "))
+            explorationsphasenanteil = float(input("Explorationsphasenanteil (Standard: 0.1, Range: 0.05 - 0.25): "))
+            zeitschritte = int(input("Zeitschritte (Standard: 2500000, Range: 200000 - 3000000): "))
+            print("─" * 80)
+            print("")
         except ValueError:
+            
+            print("")
             print("Unzulässige Eingabe")
+            time.sleep(2)
             return modus_1()
     else:
+        print("")
+        print("Es werden die Standardwerte verwendet")
         # Standardwerte:
         lernrate = 0.0001
         gamma = 0.99
@@ -140,17 +203,21 @@ def modus_1():
     
     modell.set_logger(logger) # Logger wird gesetzt.
     
+    print("")
+    print("─" * 28 + "ANLEITUNG ZU TENSORBOARD" + "─" * 28)
     input("""
-Um Statistiken zum Training zu sehen, öffnen Sie den Pfad dieser Datei im Windows-Explorer, tippen Sie in die Suchleiste:
-cmd
-Danach öffnet sich das Terminal, tippen Sie dann Folgendes ein:
-tensorboard --logdir ./logs/tmp/ --reload_interval 30
-Drücken Sie die Enter Taste als Eingabe auf diese Nachricht, um das Training zu starten: 
+1. Öffnen Sie den Pfad dieser Datei im Windows-Explorer
+2. Tippen Sie in die Adressleiste: cmd
+3. Im Terminal eingeben: tensorboard --logdir ./logs/tmp/ --reload_interval 30 
 """)
+    print("─" * 80)
+    print("")
+    input("Drücken Sie ENTER um das Training zu starten...")
+    
     
     modell.learn(total_timesteps=zeitschritte, callback=evaluierungs_callback, log_interval=4) # Das Modell wird trainiert.
     modell.save(dateiname) # Das fertige Modell wird abgespeichert.
-    print(dateiname)
+    print("Modell wurde gespeichert: " + dateiname)
     
     time.sleep(5)
     user_abfrage()
@@ -160,7 +227,14 @@ Drücken Sie die Enter Taste als Eingabe auf diese Nachricht, um das Training zu
 def modus_2():
     global seed
     
-    modell_laden = input("Geben Sie den Dateinamen des Modells ein, das Sie laden wollen: ")
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("")
+    print("═" * 80)
+    print("MODELL WEITERTRAINIEREN".center(80))
+    print("═" * 80)
+    print("")
+    
+    modell_laden = input("Dateiname des Modells, das Sie laden wollen: ")
     
     #Umgebungen werden importiert
     KäsekästchenEnv, KäsekästchenEvaluierungEnv = umgebung_importieren(modell_laden)
@@ -173,9 +247,13 @@ def modus_2():
     obs, info = evaluierungs_umgebung.reset(seed=seed)
     
     try:
+        print("")
+        print("─" * 80)
         zeitschritte = int(input("Wie viele Zeitschritte wollen Sie trainieren? "))
+        print("")
     except ValueError:
         print("Unzulässige Eingabe")
+        time.sleep(2)
         return modus_2()
     
     # Dateinamen mit den Parametern.
@@ -195,13 +273,16 @@ def modus_2():
     modell.set_env(umgebung) # Umgebung wird gesetzt.
     modell.set_logger(logger) # Logger wird gesetzt.
     
+    print("")
+    print("─" * 28 + "ANLEITUNG ZU TENSORBOARD" + "─" * 28)
     input("""
-Um Statistiken zum Training zu sehen, öffnen Sie den Pfad dieser Datei im Windows-Explorer, tippen Sie in die Suchleiste:
-cmd
-Danach öffnet sich das Terminal, tippen Sie dann Folgendes ein:
-tensorboard --logdir ./logs/tmp/ --reload_interval 30
-Drücken Sie die Enter Taste als Eingabe auf diese Nachricht, um das Training zu starten: 
+1. Öffnen Sie den Pfad dieser Datei im Windows-Explorer
+2. Tippen Sie in die Adressleiste: cmd
+3. Im Terminal eingeben: tensorboard --logdir ./logs/tmp/ --reload_interval 30 
 """)
+    print("─" * 80)
+    print("")
+    input("Drücken Sie ENTER um das Training zu starten...")
     
     modell.learn( # Modell beginnt zu lernen.
         total_timesteps=zeitschritte,
@@ -211,9 +292,10 @@ Drücken Sie die Enter Taste als Eingabe auf diese Nachricht, um das Training zu
     )
     
     modell.save(dateiname) # Das fertige Modell wird abgespeichert.
-    print(dateiname)
+    print("Modell wurde gespeichert: " + dateiname)
+    print("")
+    input("Drücken Sie ENTER um fortzufahren...")
     
-    time.sleep(5)
     user_abfrage()
 
 
@@ -221,12 +303,21 @@ Drücken Sie die Enter Taste als Eingabe auf diese Nachricht, um das Training zu
 def modus_3():
     global seed
     
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("")
+    print("═" * 80)
+    print("MODELL EVALUIEREN".center(80))
+    print("═" * 80)
+    print("")
+    
     try:
-        modell_laden = input("Geben Sie den Dateinamen des Modells ein, das Sie laden wollen: ")
+        modell_laden = input("Dateiname des Modells, das Sie laden wollen: ")
         modell = DQN.load(modell_laden)
-        anzahl_spiele = int(input("Über wie viele Spiele wollen Sie evaluieren? (Standard: 1000): "))
+        anzahl_spiele = int(input("Anzahl Evaluierungsspiele (Standard: 1000): "))
+        print("")
     except ValueError:
         print("Unzulässige Eingabe")
+        time.sleep(2)
         return modus_3()
 
     # Evaluierungsumgebung wird importiert.
@@ -247,6 +338,8 @@ def modus_3():
     # Diese Funktion evaluiert jedoch die Gewinnrate separat von evaluate_policy
     kumulierte_belohnungen, gewinnrate = gewinnrate_evaluierung(modell, umgebung, anzahl_spiele)
     
+    print("")
+    print("─" * 29 + "EVALUIERUNGSERGEBNISSE" + "─" * 29)
     print(f"""
 Liste der kumulierten Belohnungen jedes Spiels:
 
@@ -257,20 +350,30 @@ Durchschnittliche Belohnung:  {belohnung_durchschnitt}
 Standardabweichung Belohnung: {belohnung_standardabweichung}
 Gewinnrate des Agenten: {gewinnrate}
 """)
-    
-    time.sleep(3)
+    print("─" * 80)
+    print("")
+    input("Drücken Sie ENTER um fortzufahren...")
     user_abfrage()
         
 
 # Mit Modus 3 kann man selbst gegen ein trainiertes Modell spielen.
 def modus_4():
+    
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("")
+    print("═" * 80)
+    print("GEGEN MODELL SPIELEN".center(80))
+    print("═" * 80)
+    print("")
+    
     try:
-        modell_laden = input("Geben Sie den Dateinamen des Modells ein, das Sie laden wollen: ")
+        modell_laden = input("Dateiname des Modells, das Sie laden wollen: ")
         #Umgebung wird importiert
         KäsekästchenEnv, KäsekästchenEvaluierungEnv = umgebung_importieren(modell_laden)
-        zeitschritte = int(input("Wie viele Zeitschritte wollen Sie spielen? "))
+        zeitschritte = int(input("Anzahl Zeitschritte: "))
     except ValueError:
         print("Unzulässige Eingabe")
+        time.sleep(2)
         return modus_4()
     
     umgebung = KäsekästchenEnv(4, 4, render_mode="human")
@@ -283,10 +386,18 @@ def modus_4():
         umgebung.render() 
         time.sleep(0.5)
         if terminated or truncated:
-            print("Das Spiel ist fertig. Agent-Score:", umgebung.agent_score, "Ihr Score:", umgebung.spieler2_score)
-            time.sleep(3)
+            print("")
+            print("─" * 40)
+            print("Spiel beendet!")
+            print(f"Agent-Score: {umgebung.agent_score}")
+            print(f"Ihr Score:   {umgebung.spieler2_score}")
+            print("─" * 40)
+            print("")
+            time.sleep(2)
             obs, info = umgebung.reset()
     umgebung.close()
+    
+    input("Drücken Sie ENTER um fortzufahren...")
     
     user_abfrage()
 
