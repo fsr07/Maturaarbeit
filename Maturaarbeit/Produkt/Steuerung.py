@@ -234,17 +234,21 @@ def modus_2():
     print("═" * 80)
     print("")
     
-    modell_laden = input("Dateiname des Modells, das Sie laden wollen: ")
+    try:
+        modell_laden = input("Dateiname des Modells, das Sie laden wollen: ")
+        #Umgebungen werden importiert
+        KäsekästchenEnv, KäsekästchenEvaluierungEnv = umgebung_importieren(modell_laden)
+        
+        umgebung = KäsekästchenEnv(4, 4)
+        obs, info = umgebung.reset(seed=seed)
+        
+        evaluierungs_umgebung = KäsekästchenEvaluierungEnv(4, 4) # Evaluierungsumgebung wir initialisiert.
+        evaluierungs_umgebung = Monitor(evaluierungs_umgebung, info_keywords=("is_success",))
+        obs, info = evaluierungs_umgebung.reset(seed=seed)
+    except:
+        print("Unzulässige Eingabe")
+        return modus_2()
     
-    #Umgebungen werden importiert
-    KäsekästchenEnv, KäsekästchenEvaluierungEnv = umgebung_importieren(modell_laden)
-    
-    umgebung = KäsekästchenEnv(4, 4)
-    obs, info = umgebung.reset(seed=seed)
-    
-    evaluierungs_umgebung = KäsekästchenEvaluierungEnv(4, 4) # Evaluierungsumgebung wir initialisiert.
-    evaluierungs_umgebung = Monitor(evaluierungs_umgebung, info_keywords=("is_success",))
-    obs, info = evaluierungs_umgebung.reset(seed=seed)
     
     try:
         print("")
@@ -315,7 +319,7 @@ def modus_3():
         modell = DQN.load(modell_laden)
         anzahl_spiele = int(input("Anzahl Evaluierungsspiele (Standard: 1000): "))
         print("")
-    except ValueError:
+    except:
         print("Unzulässige Eingabe")
         time.sleep(2)
         return modus_3()
@@ -346,6 +350,12 @@ Durchschnittliche Belohnung:  {belohnung_durchschnitt}
 Standardabweichung Belohnung: {belohnung_standardabweichung}
 Gewinnrate des Agenten: {gewinnrate}
 """)
+    belohnungen_liste =input("Wollen Sie die Liste aller Belohnungen [1=Ja / 0=Nein] ")
+    if belohnungen_liste == "1":
+        print("""
+Liste der kumulierten Belohnungen jedes Spiels:
+{kumulierte_belohnungen}
+""")
     print("─" * 80)
     print("")
     input("Drücken Sie ENTER um fortzufahren...")
@@ -367,7 +377,7 @@ def modus_4():
         #Umgebung wird importiert
         KäsekästchenEnv, KäsekästchenEvaluierungEnv = umgebung_importieren(modell_laden)
         zeitschritte = int(input("Anzahl Zeitschritte: "))
-    except ValueError:
+    except:
         print("Unzulässige Eingabe")
         time.sleep(2)
         return modus_4()
