@@ -95,10 +95,10 @@ def user_abfrage():
     print("Steuerungsprogramm des DQN-Trainings von Käsekästchen".center(120))
     print("=" * 120)
     print("")
+    print("")
     print("─" * 80)
     print("HAUPTMENÜ".center(80))
     print("─" * 80)
-    print("")
 
     
     print("""
