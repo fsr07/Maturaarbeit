@@ -352,7 +352,7 @@ Gewinnrate des Agenten: {gewinnrate}
 """)
     belohnungen_liste =input("Wollen Sie die Liste aller Belohnungen [1=Ja / 0=Nein] ")
     if belohnungen_liste == "1":
-        print("""
+        print(f"""
 Liste der kumulierten Belohnungen jedes Spiels:
 {kumulierte_belohnungen}
 """)
