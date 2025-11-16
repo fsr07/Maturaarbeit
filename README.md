@@ -31,10 +31,8 @@ Das `Steuerung.py`-Skript ist das Hauptprogramm zur Interaktion mit den Käsekä
 Starten Sie das Skript und folgen Sie den Anweisungen in der Konsole:
 
 ```PowerShell
-# Zuerst in das geklonte Repository wechseln (falls noch nicht geschehen)
-cd Maturaarbeit
-# Dann in den Programmcode-Ordner
-cd Produkt
+# Zuerst in den Ordner mit dem Code wechseln
+cd Code
 # Dann den Code ausführen
 python Steuerung.py
 ```
@@ -50,7 +48,7 @@ Das Projekt ist folgendermassen aufgebaut:
 ├── LICENSE.txt                            # MIT Lizenz
 ├── .gitignore                             # Git-Konfiguration
 │
-└── Produkt/                               # Implementierung
+└── Code/                                  # Implementierung
     ├── Steuerung.py                       # Hauptprogramm
     ├── Belohnungsfunktion_1.py            # Umgebung mit reaktiver Bestrafung
     ├── Belohnungsfunktion_2.py            # Umgebung mit vorausschauender Bestrafung
@@ -86,10 +84,10 @@ Die folgenden Modelle wurden im Rahmen der Maturaarbeit trainiert und analysiert
 
 ## TensorBoard Statistiken
 
-Während des Trainings werden Metriken und Logs in `"Maturaarbeit/Produkt/logs/tmp/"` gespeichert. Sie können diese Statistiken mit TensorBoard visualisieren. Öffnen Sie ein Terminal im Projektstammverzeichnis und führen Sie den folgenden Befehl aus:
+Während des Trainings werden Metriken und Logs in `"Code/logs/tmp/"` gespeichert. Sie können diese Statistiken mit TensorBoard visualisieren. Öffnen Sie ein Terminal im Projektstammverzeichnis und führen Sie den folgenden Befehl aus:
 
 ```PowerShell
-tensorboard --logdir "Maturaarbeit/Produkt/logs/tmp/" --reload_interval 30
+tensorboard --logdir "Code/logs/tmp/" --reload_interval 30
 ```
 
 Anschliessend können Sie TensorBoard in Ihrem Webbrowser unter der angezeigten Adresse (normalerweise `http://localhost:6006/`) aufrufen.

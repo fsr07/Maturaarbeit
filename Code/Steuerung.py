@@ -75,21 +75,7 @@ def user_abfrage():
 | $$  $$    /$$$$$$$|  $$$$$$ | $$$$$$$$| $$$$$$/   /$$$$$$$|  $$$$$$   | $$    | $$      | $$  \ $$| $$$$$$$$| $$  \ $$
 | $$\  $$  /$$__  $$ \____  $$| $$_____/| $$_  $$  /$$__  $$ \____  $$  | $$ /$$| $$      | $$  | $$| $$_____/| $$  | $$
 | $$ \  $$|  $$$$$$$ /$$$$$$$/|  $$$$$$$| $$ \  $$|  $$$$$$$ /$$$$$$$/  |  $$$$/|  $$$$$$$| $$  | $$|  $$$$$$$| $$  | $$
-|__/  \__/ \_______/|_______/  \_______/|__/  \__/ \_______/|_______/    \___/   \_______/|__/  |__/ \_______/|__/  |__/
-                                                                                                                        
-                                                                                                                        
-                                                                                                                        
- /$$                       /$$$$$$$$ /$$$$$$  /$$$$$$$   /$$$$$$  /$$$$$$$$                                             
-| $$                      | $$_____//$$__  $$| $$__  $$ /$$$_  $$|_____ $$/                                             
-| $$$$$$$  /$$   /$$      | $$     | $$  \__/| $$  \ $$| $$$$\ $$     /$$/                                              
-| $$__  $$| $$  | $$      | $$$$$  |  $$$$$$ | $$$$$$$/| $$ $$ $$    /$$/                                               
-| $$  \ $$| $$  | $$      | $$__/   \____  $$| $$__  $$| $$\ $$$$   /$$/                                                
-| $$  | $$| $$  | $$      | $$      /$$  \ $$| $$  \ $$| $$ \ $$$  /$$/                                                 
-| $$$$$$$/|  $$$$$$$      | $$     |  $$$$$$/| $$  | $$|  $$$$$$/ /$$/                                                  
-|_______/  \____  $$      |__/      \______/ |__/  |__/ \______/ |__/                                                   
-           /$$  | $$                                                                                                    
-          |  $$$$$$/                                                                                                    
-           \______/                                                                                                     
+|__/  \__/ \_______/|_______/  \_______/|__/  \__/ \_______/|_______/    \___/   \_______/|__/  |__/ \_______/|__/  |__/                                                                                                   
 """)
     print("=" * 120)
     print("Steuerungsprogramm des DQN-Trainings von Käsekästchen".center(120))
@@ -112,13 +98,13 @@ Geben Sie eine Zahl ein, um eine Aktion zu starten:
     modus = input("Ihre Wahl: ")
     print("")
     print("─" * 80)
-    if "1" in modus:
+    if "1" == modus:
         modus_1()
-    elif "2" in modus:
+    elif "2" == modus:
         modus_2()
-    elif "3" in modus:
+    elif "3" == modus:
         modus_3()
-    elif "4" in modus:
+    elif "4" == modus:
         modus_4()
     else:
         print("Unzulässige Eingabe")
@@ -152,7 +138,7 @@ def modus_1():
     print("─" * 80)
     
     parameter = input("Hyperparameter anpassen? [1=Ja / 0=Nein]: ")
-    if "1" in parameter:
+    if "1" == parameter:
         try:
             print("")
             print("─" * 33 +  "Hyperparameter" + "─" * 33)
@@ -165,8 +151,11 @@ def modus_1():
         except ValueError:
             
             print("")
-            print("Unzulässige Eingabe")
-            time.sleep(2)
+            print("""
+Sie haben einen unzulässigen Parameterwert gewählt. Probieren Sie es erneut. Achten Sie
+darauf, dass sich die gewählten Werte in den jeweiligen Ranges des Parameters befinden.
+""")
+            time.sleep(5)
             return modus_1()
     else:
         print("")
@@ -189,8 +178,8 @@ def modus_1():
     )
     
     # Dateinamen mit den Parametern.
-    dateiname = f"{belohnungsfunktion}_lernrate{lernrate}_gamma{gamma}_explorationsphasenanteil{explorationsphasenanteil}_zeitschritt{zeitschritte}"
-    dateiname = dateiname.replace('.', ',')
+    dateiname = f"{belohnungsfunktion}__lernrate{lernrate}__gamma{gamma}__explorationsphasenanteil{explorationsphasenanteil}__zeitschritt{zeitschritte}"
+    dateiname = dateiname.replace('.', '_')
     
     # Parameter für die zyklische Evaluierung werden festgelegt.
     evaluierungs_callback = EvalCallback(evaluierungs_umgebung, best_model_save_path=f"./logs/{dateiname}",
@@ -246,7 +235,11 @@ def modus_2():
         evaluierungs_umgebung = Monitor(evaluierungs_umgebung, info_keywords=("is_success",))
         obs, info = evaluierungs_umgebung.reset(seed=seed)
     except:
-        print("Unzulässige Eingabe")
+        print("""
+Das Modell, das Sie laden wollen, existiert nicht in diesem Verzeichnis. Stellen Sie
+sicher, dass Sie sich im Unterordner Code/ befinden und das gewählte Modell existiert.
+""")
+        time.sleep(5)
         return modus_2()
     
     
@@ -256,13 +249,16 @@ def modus_2():
         zeitschritte = int(input("Wie viele Zeitschritte wollen Sie trainieren? "))
         print("")
     except ValueError:
-        print("Unzulässige Eingabe")
-        time.sleep(2)
+        print("""
+Ihre Eingabe für die Anzahl Zeitschritte ist unzulässig. Stellen Sie sicher, dass es sich um
+einen Zahl ohne Kommastellen handelt.
+""")
+        time.sleep(5)
         return modus_2()
     
     # Dateinamen mit den Parametern.
-    dateiname = f"V2_{modell_laden}_V2_zeitschritt{zeitschritte}"
-    dateiname = dateiname.replace('.', ',')
+    dateiname = f"V2__{modell_laden}__V2__zeitschritt{zeitschritte}"
+    dateiname = dateiname.replace('.', '_')
     
     # Parameter für die zyklische Evaluierung werden festgelegt.
     evaluierungs_callback = EvalCallback(evaluierungs_umgebung, best_model_save_path=f"./logs/{dateiname}",
@@ -320,8 +316,12 @@ def modus_3():
         anzahl_spiele = int(input("Anzahl Evaluierungsspiele (Standard: 1000): "))
         print("")
     except:
-        print("Unzulässige Eingabe")
-        time.sleep(2)
+        print("""
+Ihre Eingabe ist Unzulässig. Stellen Sie sicher, dass Sie sich im richtigen Unterordner
+/Code befinden, ihr gewähltes Modell dort vorhanden ist und Sie für die Anzahl
+Evaluierungsspiele eine Zahl ohne Kommastellen wählen.
+""")
+        time.sleep(5)
         return modus_3()
 
     # Evaluierungsumgebung wird importiert.
@@ -362,8 +362,9 @@ Liste der kumulierten Belohnungen jedes Spiels:
     user_abfrage()
         
 
-# Mit Modus 3 kann man selbst gegen ein trainiertes Modell spielen.
+# Mit Modus 4 kann man selbst gegen ein trainiertes Modell spielen.
 def modus_4():
+    global seed
     
     os.system('cls' if os.name == 'nt' else 'clear')
     print("")
@@ -378,12 +379,16 @@ def modus_4():
         KäsekästchenEnv, KäsekästchenEvaluierungEnv = umgebung_importieren(modell_laden)
         zeitschritte = int(input("Anzahl Zeitschritte: "))
         umgebung = KäsekästchenEnv(4, 4, render_mode="human")
-        obs, info = umgebung.reset()
+        obs, info = umgebung.reset(seed=seed)
         
         modell = DQN.load(modell_laden)
     except:
-        print("Unzulässige Eingabe")
-        time.sleep(2)
+        print("""
+Ihre Eingabe ist Unzulässig. Stellen Sie sicher, dass Sie sich im richtigen Unterordner
+/Code befinden, ihr gewähltes Modell dort vorhanden ist und Sie für die Anzahl
+der zu spielenden Zeitschritte eine Zahl ohne Kommastellen wählen.ss
+""")
+        time.sleep(5)
         return modus_4()
     
     for _ in range(zeitschritte):
